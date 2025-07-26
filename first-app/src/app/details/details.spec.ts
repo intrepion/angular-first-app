@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ActivatedRoute } from '@angular/router';
 import { Details } from './details';
 
 describe('Details', () => {
@@ -7,8 +7,17 @@ describe('Details', () => {
   let fixture: ComponentFixture<Details>;
 
   beforeEach(async () => {
+    const mockActivatedRoute = {
+      snapshot: {
+        params: { id: '1' }
+      }
+    };
+
     await TestBed.configureTestingModule({
-      imports: [Details]
+      imports: [Details],
+      providers: [
+        { provide: ActivatedRoute, useValue: mockActivatedRoute }
+      ]
     })
     .compileComponents();
 
@@ -19,5 +28,9 @@ describe('Details', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should load housing location from route parameter', () => {
+    expect(component.housingLocation).toBeDefined();
   });
 });
