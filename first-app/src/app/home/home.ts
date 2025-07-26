@@ -13,8 +13,12 @@ export class Home {
   housing: Housing = inject(Housing);
   filteredLocationList: HousingLocationInfo[] = [];
   constructor() {
-    this.housingLocationList = this.housing.getAllHousingLocations();
-    this.filteredLocationList = this.housingLocationList;
+    this.housing
+      .getAllHousingLocations()
+      .then((housingLocationList: HousingLocationInfo[]) => {
+        this.housingLocationList = housingLocationList;
+        this.filteredLocationList = housingLocationList;
+      });
   }
   filterResults(text: string) {
     if (!text) {
